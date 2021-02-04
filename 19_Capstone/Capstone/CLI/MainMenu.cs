@@ -1,48 +1,111 @@
-﻿using MenuFramework;
+﻿using Capstone.Classes;
+using MenuFramework;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Capstone.CLI
 {
-    public class MainMenu : ConsoleMenu
+    class Menu : ConsoleMenu
     {
-        /*******************************************************************************
-         * Private data:
-         * Usually, a menu has to hold a reference to some type of "business objects",
-         * on which all of the actions requested by the user are performed. A common 
-         * technique would be to declare those private fields here, and then pass them
-         * in through the constructor of the menu.
-         * ****************************************************************************/
-
-        // NOTE: This constructor could be changed to accept arguments needed by the menu
-        public MainMenu()
+        VendingMachine machine = new VendingMachine();
+        public  Menu()
         {
-            // Add Sample menu options
-            AddOption("Greeting", Greeting, "G");
-            AddOption("Show the Time", GetTime, "T");
-            AddOption("Quit", Close, "Q");
-
-            Configure(cfg =>
-           {
-               cfg.ItemForegroundColor = ConsoleColor.Cyan;
-               cfg.MenuSelectionMode = MenuSelectionMode.Arrow; // KeyString: User types a key, Arrow: User selects with arrow
-               cfg.KeyStringTextSeparator = ": ";
-               cfg.Title = "Main Menu";
-           });
+            machine.LoadStock();
+            AddOption("Begin", MainMenu);
+        }
+        public MenuOptionResult MainMenu()
+        {
+            ClearOptions();
+            AddOption("Display Items", DisplayItems);
+            AddOption("Purchase", BeginPurchase);
+            AddOption("Exit", Exit);
+            return MenuOptionResult.DoNotWaitAfterMenuSelection;
+        }
+        protected override void OnBeforeShow()
+        {
+            Console.WriteLine("Welcome to the Vending Machine");
+            Console.WriteLine($"Your current balance is: ${machine.MachineBalance}");
+            Console.WriteLine("");
         }
 
-        private MenuOptionResult GetTime()
+        #region MainMenu Functions
+
+        public MenuOptionResult DisplayItems()
         {
-            Console.WriteLine($"The time is {DateTime.Now}");
+            machine.PrintSnacks();
             return MenuOptionResult.WaitAfterMenuSelection;
         }
 
-        private MenuOptionResult Greeting()
+        public MenuOptionResult BeginPurchase()
         {
-            string name = GetString("What is your name? ");
-            Console.WriteLine($"Hello, {name}!");
-            return MenuOptionResult.WaitAfterMenuSelection;
+            ClearOptions();
+            AddOption("Feed Money", FeedMoney);
+            AddOption("Select Product", SelectProduct);
+            AddOption("Back", GoToMainMenu);
+            return MenuOptionResult.DoNotWaitAfterMenuSelection;
         }
+        #endregion
+
+        #region PurchaseMenu Functions
+
+        public MenuOptionResult FeedMoney()
+        {
+            this.Configure(cfg =>
+            {
+                cfg.Title = "Welcome to the Vending Machine";
+            });
+            ClearOptions();
+            AddOption("$1.00", AddOne);
+            AddOption("$2.00", AddTwo);
+            AddOption("$5.00", AddFive);
+            AddOption("$10.00", AddTen);
+            AddOption("Back", BeginPurchase);
+            return MenuOptionResult.DoNotWaitAfterMenuSelection;
+        }
+
+        public MenuOptionResult SelectProduct()
+        {
+            machine.PrintSnacks();
+            string inputCode = GetString("Please enter desired item code: ");
+            machine.Vend(inputCode);
+            return MenuOptionResult.CloseMenuAfterSelection;
+        }
+        public MenuOptionResult GoToMainMenu()
+        {
+            return MainMenu();
+        }
+
+        #endregion
+
+
+        #region MoneyFunctions
+        public MenuOptionResult AddOne()
+        {
+            machine.AddMoney(1.00M);
+            return MenuOptionResult.DoNotWaitAfterMenuSelection;
+        }
+        public MenuOptionResult AddTwo()
+        {
+            machine.AddMoney(2.00M);
+            return MenuOptionResult.DoNotWaitAfterMenuSelection;
+        }
+        public MenuOptionResult AddFive()
+        {
+            machine.AddMoney(5.00M);
+            return MenuOptionResult.DoNotWaitAfterMenuSelection;
+        }
+        public MenuOptionResult AddTen()
+        {
+            machine.AddMoney(10.00M);
+            return MenuOptionResult.DoNotWaitAfterMenuSelection;
+        }
+        #endregion
+        
+        public MenuOptionResult GoToPurchaseMenu()
+        {
+            return BeginPurchase();
+        }
+
     }
 }

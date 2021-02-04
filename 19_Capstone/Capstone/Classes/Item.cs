@@ -15,6 +15,13 @@ namespace Capstone.Classes
 
         public int Count = 5;
 
+        public Item(string code, string name, decimal cost, string type)
+        {
+            Code = code;
+            Name = name;
+            Cost = cost;
+            Type = type;         
+        }
         public Item(string name, decimal cost)
         {
             this.Name = name;
@@ -29,47 +36,33 @@ namespace Capstone.Classes
         
 
 
-        public void GetMessage()
-        {
-            string path = "vendingmachine.csv";
-            using (StreamReader reader = new StreamReader(path))
-            {
-                while (!reader.EndOfStream)
-                {
-                    string line = reader.ReadLine();
+        //public void GetMessage()
+        //{
+        //    string path = "vendingmachine.csv";
+        //    using (StreamReader reader = new StreamReader(path))
+        //    {
+        //        while (!reader.EndOfStream)
+        //        {
+        //            string line = reader.ReadLine();
 
-                    string[] lineArray = line.Split("|");
-                    this.Type = lineArray[3];
-                    if (this.Type == "Chip")
-                        {
-                        Console.WriteLine("Crunch Crunch, Yum!");
-                        }
-                    else if (this.Type == "Candy")
-                    {
-                        Console.WriteLine("Munch Munch, Yum!");
-                    }
-                    else if (this.Type == "Drink")
-                    {
-                        Console.WriteLine("Glug Glug, Yum!");
-                    }
-                    else if (this.Type == "Gum")
-                    {
-                        Console.WriteLine("Chew Chew, Yum!");
-                    }
-                }
-
-            }
-
-
-
-
-        }
-
-
-
-
-
-
-
+        //            string[] lineArray = line.Split("|");
+        //            this.Type = lineArray[3];
+        //            if (this.Type == "Chip")
+        //                {
+        //                Console.WriteLine("Crunch Crunch, Yum!");
+        //                }
+        //            else if (this.Type == "Candy")
+        //            {
+        //                Console.WriteLine("Munch Munch, Yum!");
+        //            }
+        //            else if (this.Type == "Drink")
+        //            {
+        //                Console.WriteLine("Glug Glug, Yum!");
+        //            }
+        //            else if (this.Type == "Gum")
+        //            {
+        //                Console.WriteLine("Chew Chew, Yum!");
+        //            }
+        //        }
     }
 }
