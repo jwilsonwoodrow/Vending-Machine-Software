@@ -66,13 +66,21 @@ namespace Capstone.Classes
                         Snacks[code].Count -= 1;
                         OldBalance = MachineBalance;
                         MachineBalance -= Snacks[code].Cost;
-                        Console.WriteLine($"");
+                        Console.WriteLine($"You've purchased {Snacks[code].Name} for ${Snacks[code].Cost}. You have ${MachineBalance} remaining");
                         Console.WriteLine(GetMessage(Snacks[code].Type));
+                        using (StreamWriter writer = new StreamWriter(logPath, true))
+                        {
+                            writer.WriteLine($"{DateTime.Now} {Snacks[code].Name} {Snacks[code].Code}: {OldBalance} {MachineBalance}");
+                        }
                     }
+                    else Console.WriteLine("Insufficient Funds");
                 }
-                else Console.WriteLine();
+                else Console.WriteLine("Out of stock");
             }
-            else Console.WriteLine("Please enter a valid code");
+            else
+            {
+                Console.WriteLine("Please enter a valid code");
+            }
         }
         public string GetMessage(string type)
         {
