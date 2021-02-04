@@ -9,6 +9,5 @@ namespace VendingMachineSoftware
             Menu menu = new Menu();
             menu.Show();
         }
-
     }
 }

@@ -1,6 +1,7 @@
 ﻿using MenuFramework;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace VendingMachineSoftware
@@ -19,6 +20,11 @@ namespace VendingMachineSoftware
         {
             OldBalance = MachineBalance;
             MachineBalance += amount;
+            //using (StreamWriter writer = new StreamWriter(path, true))
+            //{
+            //    writer.WriteLine($"{DateTime.Now} FEED MONEY: {OldBalance} {MachineBalance}");
+            //}
         }
+
     }
 }

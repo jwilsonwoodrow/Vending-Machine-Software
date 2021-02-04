@@ -1,36 +1,65 @@
 ﻿using MenuFramework;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace VendingMachineSoftware
 {
     class Menu : ConsoleMenu
     {
+        VendingMachine machine = new VendingMachine();
         public Menu()
         {
             this.Configure(cfg =>
             {
-                cfg.Title = "Welcome to the vending machine";
+                cfg.Title = "Welcome to the Vending Machine";
             });
-            AddOption("Insert Bills", FeedMoney);
+            AddOption("Begin", MainMenu);
+        }
+        public MenuOptionResult MainMenu()
+        {
+            ClearOptions();
+            AddOption("Display Items", DisplayItems);
             AddOption("Purchase", BeginPurchase);
             AddOption("Exit", Exit);
+            return MenuOptionResult.DoNotWaitAfterMenuSelection;
         }
         protected override void OnAfterShow()
         {
             Console.WriteLine("");
-            Console.WriteLine($"Current balance is: ${VendingMachine.MachineBalance}");
+            Console.WriteLine($"Current balance is: ${machine.MachineBalance}");
+        }
+        #region Menu 1 Functions
+
+        public MenuOptionResult DisplayItems()
+        {
+
+            //foreach (Item item in ItemDictionary)
+            //{
+            //    Console.WriteLine($"<{item.Code}> {item.Name}: {item.Cost}");
+            //}
+            return MenuOptionResult.WaitAfterMenuSelection;
         }
 
+        public MenuOptionResult BeginPurchase()
+        {
+            ClearOptions();
+            AddOption("Feed Money", FeedMoney);
+            AddOption("Select Product", SelectProduct);
+            AddOption("Back", GoToMainMenu);
+            return MenuOptionResult.DoNotWaitAfterMenuSelection;
+        }
+        #endregion
         public MenuOptionResult FeedMoney()
         {
-            this.ClearOptions();
+            this.Configure(cfg =>
+            {
+                cfg.Title = "Welcome to the Vending Machine";
+            });
+            ClearOptions();
             AddOption("$1.00", AddOne);
             AddOption("$2.00", AddTwo);
             AddOption("$5.00", AddFive);
             AddOption("$10.00", AddTen);
-            AddOption("Back", MainMenu);
+            AddOption("Back", GoToPurchaseMenu);
 
             //string input = GetString("Select bill to deposit. 1, 2, 5, and 10 bills are accepted.");
             //while (input != "q")
@@ -43,37 +72,47 @@ namespace VendingMachineSoftware
             //    }
             //    else input = GetString("Machine accepts 1, 2, 5, and 10 dollar bills. Please enter a valid bill or type 'q' to exit.");
             //}
-            
+
             return MenuOptionResult.DoNotWaitAfterMenuSelection;
         }
 
-        public MenuOptionResult BeginPurchase()
+        public MenuOptionResult SelectProduct()
         {
+            string inputCode = GetString("Please enter desired item code: ");
             return MenuOptionResult.CloseMenuAfterSelection;
         }
 
         #region AddMoneys
         public MenuOptionResult AddOne()
         {
-            AddMoney(1);
+            machine.AddMoney(1.00M);
             return MenuOptionResult.DoNotWaitAfterMenuSelection;
         }
         public MenuOptionResult AddTwo()
         {
+            machine.AddMoney(2.00M);
             return MenuOptionResult.DoNotWaitAfterMenuSelection;
         }
         public MenuOptionResult AddFive()
         {
+            machine.AddMoney(5.00M);
             return MenuOptionResult.DoNotWaitAfterMenuSelection;
         }
         public MenuOptionResult AddTen()
         {
+            machine.AddMoney(10.00M);
             return MenuOptionResult.DoNotWaitAfterMenuSelection;
         }
-        public MenuOptionResult MainMenu()
-        {
-            return MenuOptionResult.CloseMenuAfterSelection;
-        }
         #endregion
+
+        public MenuOptionResult GoToPurchaseMenu()
+        {
+            return BeginPurchase();
+        }
+
+        public MenuOptionResult GoToMainMenu()
+        {
+            return MainMenu();
+        }
     }
 }
