@@ -26,7 +26,7 @@ namespace Capstone.CLI
             Configure(cfg =>
            {
                cfg.ItemForegroundColor = ConsoleColor.Cyan;
-               cfg.MenuSelectionMode = MenuSelectionMode.KeyString; // KeyString: User types a key, Arrow: User selects with arrow
+               cfg.MenuSelectionMode = MenuSelectionMode.Arrow; // KeyString: User types a key, Arrow: User selects with arrow
                cfg.KeyStringTextSeparator = ": ";
                cfg.Title = "Main Menu";
            });
