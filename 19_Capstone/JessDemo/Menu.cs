@@ -44,6 +44,7 @@ namespace VendingMachineSoftware
             ClearOptions();
             AddOption("Feed Money", FeedMoney);
             AddOption("Select Product", SelectProduct);
+            AddOption("Finish Transaction", VendEnd);
             AddOption("Back", GoToMainMenu);
             return MenuOptionResult.DoNotWaitAfterMenuSelection;
         }
@@ -100,7 +101,7 @@ namespace VendingMachineSoftware
         }
         public MenuOptionResult AddTen()
         {
-            machine.AddMoney(10.00M);
+            machine.AddMoney(10.05M);
             return MenuOptionResult.DoNotWaitAfterMenuSelection;
         }
         #endregion
@@ -113,6 +114,12 @@ namespace VendingMachineSoftware
         public MenuOptionResult GoToMainMenu()
         {
             return MainMenu();
+        }
+
+        public MenuOptionResult VendEnd()
+        {
+            machine.FinishTransaction(machine.MachineBalance);
+            return MenuOptionResult.WaitAfterMenuSelection;
         }
     }
 }

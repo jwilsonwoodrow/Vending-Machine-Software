@@ -25,6 +25,22 @@ namespace VendingMachineSoftware
             //    writer.WriteLine($"{DateTime.Now} FEED MONEY: {OldBalance} {MachineBalance}");
             //}
         }
-
+        public void FinishTransaction(decimal MachineBalance)
+        {
+            Console.WriteLine($"Your unused balance is {MachineBalance}");
+            OldBalance = MachineBalance;
+            int quarters = (int)Math.Floor(Decimal.Divide(MachineBalance, 0.25M));
+            MachineBalance -= quarters * 0.25M;
+            int dimes = (int)Math.Floor(Decimal.Divide(MachineBalance, 0.10M));
+            MachineBalance -= dimes * 0.10M;
+            int nickels = (int)Math.Floor(Decimal.Divide(MachineBalance, 0.05M));
+            MachineBalance -= nickels * 0.05M;
+            Console.WriteLine($"Your change is {quarters} quarter(s), {dimes} dime(s), and {nickels} nickel(s).");
+            Console.WriteLine($"Remaining Balance is {MachineBalance}");
+            //using (StreamWriter writer = new StreamWriter(path, true))
+            //{
+            //    writer.WriteLine($"{DateTime.Now} GIVE CHANGE: {OldBalance} {MachineBalance}");
+            //}
+        }
     }
 }
