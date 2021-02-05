@@ -51,7 +51,11 @@ namespace Capstone.Classes
             Console.WriteLine("Available Items");
             foreach (KeyValuePair<string, Item> item in Snacks)
             {
-                Console.WriteLine($"{item.Value.Code}| {item.Value.Name} | ${item.Value.Cost} | {item.Value.Quantity} in stock");
+                if (item.Value.Quantity == 0)
+                {
+                    Console.WriteLine($"{item.Value.Code}| {item.Value.Name} SOLD OUT");
+                }
+                else Console.WriteLine($"{item.Value.Code}| {item.Value.Name} | ${item.Value.Cost} | {item.Value.Quantity} in stock");
             }
         }
 
