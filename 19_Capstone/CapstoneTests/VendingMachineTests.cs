@@ -1,11 +1,11 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using Capstone.Classes;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
-using System.Text;
-using Capstone.Classes;
+
 
 namespace CapstoneTests
-{   [TestClass]
+{
+    [TestClass]
     public class VendingMachineTests
     {
         [TestMethod]
@@ -15,10 +15,10 @@ namespace CapstoneTests
             decimal balance = 0.00M;
 
             //act
-            VendingMachine machine = new VendingMachine();
+            VendingMachine constructorMachine = new VendingMachine();
 
             // assert
-            Assert.AreEqual(balance, machine.MachineBalance);
+            Assert.AreEqual(balance, constructorMachine.MachineBalance);
 
         }
 
@@ -26,46 +26,46 @@ namespace CapstoneTests
         public void AddMoney_Test()
         {
             // arrange
-            VendingMachine machine = new VendingMachine();
+            VendingMachine moneyMachine = new VendingMachine();
             decimal testMoney = 5.00M;
 
             //act 
-            machine.AddMoney(testMoney);
+            moneyMachine.AddMoney(testMoney);
             // Assert
-            Assert.AreEqual(testMoney, machine.MachineBalance);
-            Assert.AreEqual(0, machine.OldBalance);
+            Assert.AreEqual(testMoney, moneyMachine.MachineBalance);
+            Assert.AreEqual(0, moneyMachine.OldBalance);
 
             decimal addMore = 10.00M;
-            machine.AddMoney(addMore);
+            moneyMachine.AddMoney(addMore);
 
             decimal expectedMachineBalnce = testMoney + addMore;
 
 
-            Assert.AreEqual(expectedMachineBalnce, machine.MachineBalance);
-            Assert.AreEqual(testMoney, machine.OldBalance);
+            Assert.AreEqual(expectedMachineBalnce, moneyMachine.MachineBalance);
+            Assert.AreEqual(testMoney, moneyMachine.OldBalance);
 
 
         }
 
-        //[TestMethod]
-        //public void LoadStock_Test()
-        //{
-        //    //arrange 
-        //    VendingMachine machine = new VendingMachine();
-        //    Item item = new Item("E4", "Doritos", 1.75M, "Chip");
-        //    Item item1 = new Item("A1", "Cola", 1.25M, "Drink");
+        [TestMethod]
+        public void LoadStock_Test()
+        {
+            //arrange 
+            int expectedQuantity = 5;
 
-        //    Dictionary< string, Item> testDictionary = new Dictionary<string, Item>();
-        //    testDictionary.Add("E4", item);
-        //    testDictionary.Add("A1", item1);
+            VendingMachine machineStock = new VendingMachine();
+
+            //act 
+            machineStock.LoadStock();
+            
+            //assert 
+            Assert.AreEqual(expectedQuantity, machineStock.Snacks["A1"].Quantity);
+            Assert.AreEqual(expectedQuantity, machineStock.Snacks["C4"].Quantity);
+            Assert.AreEqual(expectedQuantity, machineStock.Snacks["D2"].Quantity);
+            Assert.AreEqual(expectedQuantity, machineStock.Snacks["B3"].Quantity);
 
 
-        //    //act 
-
-        //    //assert 
-
-
-        //}
+        }
 
         [DataTestMethod]
         [DataRow("Chip", "Crunch Crunch, Yum!")]
@@ -82,16 +82,16 @@ namespace CapstoneTests
 
             //act 
 
-            VendingMachine machine = new VendingMachine();
+            VendingMachine stringMachine = new VendingMachine();
 
             //assert 
-            Assert.AreEqual(expectedMessage, machine.GetMessage(type));
+            Assert.AreEqual(expectedMessage, stringMachine.GetMessage(type));
 
 
         }
 
         [TestMethod]
-        public void Vend_Quantity_Test()  //TODO help
+        public void Vend_Quantity_Test() 
         {
             //arrange 
             VendingMachine machine = new VendingMachine();
@@ -101,23 +101,44 @@ namespace CapstoneTests
             Item item3 = new Item("C5", "BBQ Chips", 1.00M, "Chips");
             Item item4 = new Item("D4", "TripleMint", 0.75M, "Gum");
 
-            Dictionary<string, Item> SnacksTest = new Dictionary<string, Item>
-            {
-                { item1.Code, item1 },
-                { item2.Code, item2 },
-                { item3.Code, item3 },
-                { item4.Code, item4 }
-            };
-
+            machine.Snacks.Add(item1.Code, item1);
+            machine.Snacks.Add(item2.Code, item2);
+            machine.Snacks.Add(item3.Code, item3);
+            machine.Snacks.Add(item4.Code, item4);
 
             // act 
             machine.Vend("A1");
-            int actualCount = SnacksTest[item1.Code].Quantity;
-
+            int actualCount = machine.Snacks[item1.Code].Quantity;
+            decimal actualOldBalance = machine.OldBalance;
+            decimal actualMachineBalance = machine.MachineBalance;
             // assert
             Assert.AreEqual(4, actualCount);
+            Assert.AreEqual(5.00M, actualOldBalance);
+            Assert.AreEqual(3.25M, actualMachineBalance);
+            
 
+        }
 
+        [TestMethod]
+
+        public void GiveChange_Test()
+        {
+            VendingMachine testMachine = new VendingMachine();
+            testMachine.AddMoney(20.00M);
+            testMachine.LoadStock();
+
+            testMachine.Vend("A1");
+            testMachine.Vend("B2");
+            testMachine.Vend("C1");
+            testMachine.Vend("D4");
+
+            decimal actualMachinebalance = testMachine.MachineBalance;
+            //testMachine.GiveChange();
+            decimal machineBalanceAfterChange = testMachine.MachineBalance;
+
+            Assert.AreEqual(14.20M, testMachine.OldBalance);
+            Assert.AreEqual(13.45M, actualMachinebalance);
+            Assert.AreEqual(0.00M, machineBalanceAfterChange);
 
 
         }
