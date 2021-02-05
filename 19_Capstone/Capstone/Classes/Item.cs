@@ -20,49 +20,23 @@ namespace Capstone.Classes
             Code = code;
             Name = name;
             Cost = cost;
-            Type = type;         
+            Type = type;
+            
         }
-        public Item(string name, decimal cost)
-        {
-            this.Name = name;
-            this.Cost = cost;
-        }
+        //public Item(string name, decimal cost)
+        //{
+        //    this.Name = name;
+        //    this.Cost = cost;
+        //}
 
-        public Item(string name, int count)
-        {
-            this.Name = name;
-            this.Count = count;
-        }
+        //public Item(string name, int count)
+        //{
+        //    this.Name = name;
+        //    this.Count = count;
+        //}
         
 
 
-        //public void GetMessage()
-        //{
-        //    string path = "vendingmachine.csv";
-        //    using (StreamReader reader = new StreamReader(path))
-        //    {
-        //        while (!reader.EndOfStream)
-        //        {
-        //            string line = reader.ReadLine();
-
-        //            string[] lineArray = line.Split("|");
-        //            this.Type = lineArray[3];
-        //            if (this.Type == "Chip")
-        //                {
-        //                Console.WriteLine("Crunch Crunch, Yum!");
-        //                }
-        //            else if (this.Type == "Candy")
-        //            {
-        //                Console.WriteLine("Munch Munch, Yum!");
-        //            }
-        //            else if (this.Type == "Drink")
-        //            {
-        //                Console.WriteLine("Glug Glug, Yum!");
-        //            }
-        //            else if (this.Type == "Gum")
-        //            {
-        //                Console.WriteLine("Chew Chew, Yum!");
-        //            }
-        //        }
+       
     }
 }
