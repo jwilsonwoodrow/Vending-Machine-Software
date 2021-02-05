@@ -50,6 +50,7 @@ namespace Capstone.CLI
         public MenuOptionResult FinishTransaction()
         {
             machine.GiveChange();
+            Console.ReadKey();
             return MenuOptionResult.WaitThenCloseAfterSelection; 
         }
 

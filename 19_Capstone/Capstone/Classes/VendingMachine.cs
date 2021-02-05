@@ -137,7 +137,7 @@ namespace Capstone.Classes
                 writer.WriteLine($"{DateTime.Now} GIVE CHANGE: {OldBalance} {MachineBalance}");
             }
             Console.WriteLine("Thank you for choosing Vendo-Matic 8000");
-            Console.ReadKey();
+           
         }
     }
 }
