@@ -133,7 +133,7 @@ namespace CapstoneTests
             testMachine.Vend("D4");
 
             decimal actualMachinebalance = testMachine.MachineBalance;
-            //testMachine.GiveChange();
+            testMachine.GiveChange();
             decimal machineBalanceAfterChange = testMachine.MachineBalance;
 
             Assert.AreEqual(14.20M, testMachine.OldBalance);

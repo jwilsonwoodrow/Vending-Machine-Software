@@ -15,6 +15,12 @@ namespace Capstone.CLI
             AddOption("Feed Money", FeedMoney);
             AddOption("Select Product", SelectProduct);
             AddOption("Finish Transaction", FinishTransaction);
+            this.Configure(config => {
+                
+                config.ItemForegroundColor = ConsoleColor.Green;
+
+
+            });
         }
         protected override void OnBeforeShow()
         {

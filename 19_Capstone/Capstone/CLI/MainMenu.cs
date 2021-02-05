@@ -15,13 +15,20 @@ namespace Capstone.CLI
             AddOption("Display Items", DisplayItems);
             AddOption("Purchase", BeginPurchase);
             AddOption("Exit", Exit);
+             this.Configure(config => {
+                  config.SelectedItemForegroundColor = ConsoleColor.Cyan;
+                  config.ItemForegroundColor = ConsoleColor.DarkCyan;
+          
+              });
         }
 
         protected override void OnBeforeShow()
         {
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
             Console.WriteLine("Welcome to the Vendo-Matic 8000");
             Console.WriteLine($"Your current balance is: ${machine.MachineBalance}");
             Console.WriteLine("");
+            
         }
 
         #region MainMenu Functions
