@@ -51,7 +51,7 @@ namespace Capstone.Classes
             Console.WriteLine("Available Items");
             foreach (KeyValuePair<string, Item> item in Snacks)
             {
-                Console.WriteLine($"{item.Value.Code}| {item.Value.Name} | ${item.Value.Cost} | {item.Value.Count} in stock");
+                Console.WriteLine($"{item.Value.Code}| {item.Value.Name} | ${item.Value.Cost} | {item.Value.Quantity} in stock");
             }
         }
 
@@ -59,11 +59,11 @@ namespace Capstone.Classes
         {
             if (Snacks.ContainsKey(code))
             {
-                if (Snacks[code].Count > 0)
+                if (Snacks[code].Quantity > 0)
                 {
                     if (Snacks[code].Cost <= MachineBalance)
                     {
-                        Snacks[code].Count -= 1;
+                        Snacks[code].Quantity -= 1;
                         OldBalance = MachineBalance;
                         MachineBalance -= Snacks[code].Cost;
                         Console.WriteLine($"You've purchased {Snacks[code].Name} for ${Snacks[code].Cost}. You have ${MachineBalance} remaining");

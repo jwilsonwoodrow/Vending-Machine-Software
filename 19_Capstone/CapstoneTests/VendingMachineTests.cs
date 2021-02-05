@@ -91,7 +91,7 @@ namespace CapstoneTests
         }
 
         [TestMethod]
-        public void Vend_Count_Test()
+        public void Vend_Quantity_Test()
         {
             //arrange 
             VendingMachine machine = new VendingMachine();
@@ -101,21 +101,23 @@ namespace CapstoneTests
             Item item3 = new Item("C5", "BBQ Chips", 1.00M, "Chips");
             Item item4 = new Item("D4", "TripleMint", 0.75M, "Gum");
 
-            Dictionary<string, Item> SnacksTest = new Dictionary<string, Item>();
-            SnacksTest.Add(item1.Code, item1);
-            SnacksTest.Add(item2.Code, item2);
-            SnacksTest.Add(item3.Code, item3);
-            SnacksTest.Add(item4.Code, item4);
+            Dictionary<string, Item> SnacksTest = new Dictionary<string, Item>
+            {
+                { item1.Code, item1 },
+                { item2.Code, item2 },
+                { item3.Code, item3 },
+                { item4.Code, item4 }
+            };
 
 
             // act 
             machine.Vend("A1");
-            int actualCount = SnacksTest[item1.Code].Count;
+            int actualCount = SnacksTest[item1.Code].Quantity;
 
-            // assert- Failing actualCount is still 5 ??
+            // assert
             Assert.AreEqual(4, actualCount);
 
-           
+
 
 
         }

@@ -13,7 +13,7 @@ namespace Capstone.Classes
 
         public string Type { get; private set; }
 
-        public int Count = 5;
+        public int Quantity = 5;
 
         public Item(string code, string name, decimal cost, string type)
         {
@@ -23,17 +23,7 @@ namespace Capstone.Classes
             Type = type;
             
         }
-        //public Item(string name, decimal cost)
-        //{
-        //    this.Name = name;
-        //    this.Cost = cost;
-        //}
-
-        //public Item(string name, int count)
-        //{
-        //    this.Name = name;
-        //    this.Count = count;
-        //}
+        
         
 
 
