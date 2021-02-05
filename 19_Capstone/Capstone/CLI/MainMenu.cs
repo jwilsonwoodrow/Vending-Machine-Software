@@ -9,10 +9,10 @@ namespace Capstone.CLI
     class Menu : ConsoleMenu
     {
         VendingMachine machine = new VendingMachine();
-        public  Menu()
+        public Menu()
         {
             machine.LoadStock();
-            AddOption("Begin", MainMenu);
+            AddOption("Begin", MainMenu); //TODO help
         }
         public MenuOptionResult MainMenu()
         {
@@ -40,8 +40,10 @@ namespace Capstone.CLI
         public MenuOptionResult BeginPurchase()
         {
             ClearOptions();
+            
             AddOption("Feed Money", FeedMoney);
             AddOption("Select Product", SelectProduct);
+            AddOption("Finish Transaction", FinishTransaction);
             AddOption("Back", GoToMainMenu);
             return MenuOptionResult.DoNotWaitAfterMenuSelection;
         }
@@ -51,11 +53,8 @@ namespace Capstone.CLI
 
         public MenuOptionResult FeedMoney()
         {
-            this.Configure(cfg =>
-            {
-                cfg.Title = "Welcome to the Vending Machine";
-            });
             ClearOptions();
+            Console.WriteLine("Select your bills");  //TODO help
             AddOption("$1.00", AddOne);
             AddOption("$2.00", AddTwo);
             AddOption("$5.00", AddFive);
@@ -69,7 +68,13 @@ namespace Capstone.CLI
             machine.PrintSnacks();
             string inputCode = GetString("Please enter desired item code: ");
             machine.Vend(inputCode);
-            return MenuOptionResult.CloseMenuAfterSelection;
+            return MenuOptionResult.WaitAfterMenuSelection;
+        }
+
+        public MenuOptionResult FinishTransaction()
+        {
+            machine.GiveChange();
+            return GoToMainMenu();
         }
         public MenuOptionResult GoToMainMenu()
         {
@@ -77,7 +82,6 @@ namespace Capstone.CLI
         }
 
         #endregion
-
 
         #region MoneyFunctions
         public MenuOptionResult AddOne()
@@ -102,10 +106,6 @@ namespace Capstone.CLI
         }
         #endregion
         
-        public MenuOptionResult GoToPurchaseMenu()
-        {
-            return BeginPurchase();
-        }
 
     }
 }

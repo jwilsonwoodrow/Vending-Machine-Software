@@ -55,7 +55,7 @@ namespace Capstone.Classes
             }
         }
 
-        public void Vend(string code) //TODO
+        public void Vend(string code)
         {
             if (Snacks.ContainsKey(code))
             {
@@ -66,22 +66,23 @@ namespace Capstone.Classes
                         Snacks[code].Quantity -= 1;
                         OldBalance = MachineBalance;
                         MachineBalance -= Snacks[code].Cost;
-                        Console.WriteLine($"You've purchased {Snacks[code].Name} for ${Snacks[code].Cost}. You have ${MachineBalance} remaining");
-                        Console.WriteLine(GetMessage(Snacks[code].Type));
+                        string typeMessage = GetMessage(Snacks[code].Type);
+                        Console.WriteLine($"You've purchased {Snacks[code].Name} for ${Snacks[code].Cost}. {typeMessage} You have ${MachineBalance} remaining");
                         using (StreamWriter writer = new StreamWriter(logPath, true))
                         {
                             writer.WriteLine($"{DateTime.Now} {Snacks[code].Name} {Snacks[code].Code}: {OldBalance} {MachineBalance}");
                         }
                     }
-                    else Console.WriteLine("Insufficient Funds");
+                    else Console.WriteLine("Error: Insufficient Funds");
                 }
-                else Console.WriteLine("Out of stock");
+                else Console.WriteLine("Error: Item Out of stock");
             }
             else
             {
-                Console.WriteLine("Please enter a valid code");
+                Console.WriteLine("Error: Please Enter a Valid code");
             }
         }
+
         public string GetMessage(string type)
         {
             if (type == "Chip")
@@ -103,5 +104,24 @@ namespace Capstone.Classes
             return null;
         }
 
+        public void GiveChange()
+        {
+            Console.WriteLine($"Your unused balance is {MachineBalance}");
+            OldBalance = MachineBalance;
+            int quarters = (int)Math.Floor(Decimal.Divide(MachineBalance, 0.25M));
+            MachineBalance -= quarters * 0.25M;
+            int dimes = (int)Math.Floor(Decimal.Divide(MachineBalance, 0.10M));
+            MachineBalance -= dimes * 0.10M;
+            int nickels = (int)Math.Floor(Decimal.Divide(MachineBalance, 0.05M));
+            MachineBalance -= nickels * 0.05M;
+            Console.WriteLine($"Your change is {quarters} quarter(s), {dimes} dime(s), and {nickels} nickel(s).");
+            Console.WriteLine($"Remaining Balance is {MachineBalance}");
+            using (StreamWriter writer = new StreamWriter(logPath, true))
+            {
+                writer.WriteLine($"{DateTime.Now} GIVE CHANGE: {OldBalance} {MachineBalance}");
+            }
+            Console.WriteLine("Thank you for choosing Vendo-Matic 8000");
+            Console.ReadKey();
+        }
     }
 }

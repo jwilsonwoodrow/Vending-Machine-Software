@@ -41,7 +41,7 @@ namespace CapstoneTests
             Assert.AreEqual(code, item.Code);
             Assert.AreEqual(name, item.Name);
             Assert.AreEqual(cost, item.Cost);
-            Assert.AreEqual(5, item.Count);
+            Assert.AreEqual(5, item.Quantity);
             Assert.AreEqual(type, item.Type);
 
 
