@@ -10,13 +10,13 @@ namespace Capstone.Classes
         public decimal MachineBalance { get; private set; }
         public decimal OldBalance { get; set; }
 
-        public Dictionary<string, Item> Snacks = new Dictionary<string, Item>() { };
+        public Dictionary<string, Item> Snacks = new Dictionary<string, Item>(StringComparer.InvariantCultureIgnoreCase) { };
 
         string logPath = "..\\..\\..\\..\\VendingLog.txt";
 
         public VendingMachine()
         {
-            this.MachineBalance = 0;
+            this.MachineBalance = 0.00M;
         }
 
         public void AddMoney(decimal amount)
@@ -48,14 +48,14 @@ namespace Capstone.Classes
 
         public void PrintSnacks()
         {
-            Console.WriteLine("Available Items");
+            Console.WriteLine("Available Items:");
             foreach (KeyValuePair<string, Item> item in Snacks)
             {
                 if (item.Value.Quantity == 0)
                 {
-                    Console.WriteLine($"{item.Value.Code}| {item.Value.Name} SOLD OUT");
+                    Console.WriteLine($"{item.Value.Code} | {item.Value.Name} SOLD OUT");
                 }
-                else Console.WriteLine($"{item.Value.Code}| {item.Value.Name} | ${item.Value.Cost} | {item.Value.Quantity} in stock");
+                else Console.WriteLine($"{item.Value.Code} | {item.Value.Name} | ${item.Value.Cost} | {item.Value.Quantity} in stock");
             }
         }
 
@@ -71,20 +71,32 @@ namespace Capstone.Classes
                         OldBalance = MachineBalance;
                         MachineBalance -= Snacks[code].Cost;
                         string typeMessage = GetMessage(Snacks[code].Type);
+                        Console.WriteLine("");
                         Console.WriteLine($"You've purchased {Snacks[code].Name} for ${Snacks[code].Cost}. {typeMessage} You have ${MachineBalance} remaining");
                         using (StreamWriter writer = new StreamWriter(logPath, true))
                         {
                             writer.WriteLine($"{DateTime.Now} {Snacks[code].Name} {Snacks[code].Code}: {OldBalance} {MachineBalance}");
                         }
                     }
-                    else Console.WriteLine("Error: Insufficient Funds");
+                    else
+                    {
+                        Console.WriteLine("");
+                        Console.WriteLine("Error: Insufficient Funds");
+                    }
                 }
-                else Console.WriteLine("Error: Item Out of stock");
+                else
+                {
+                    Console.WriteLine("");
+                    Console.WriteLine("Error: Item Out of stock");
+                }
             }
             else
             {
+                Console.WriteLine("");
                 Console.WriteLine("Error: Please Enter a Valid code");
+
             }
+
         }
 
         public string GetMessage(string type)

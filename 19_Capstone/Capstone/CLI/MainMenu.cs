@@ -19,7 +19,7 @@ namespace Capstone.CLI
 
         protected override void OnBeforeShow()
         {
-            Console.WriteLine("Welcome to the Vending Machine");
+            Console.WriteLine("Welcome to the Vendo-Matic 8000");
             Console.WriteLine($"Your current balance is: ${machine.MachineBalance}");
             Console.WriteLine("");
         }
