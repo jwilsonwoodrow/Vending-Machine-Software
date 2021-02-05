@@ -23,7 +23,7 @@ namespace Capstone
 
             // Some objects could be passed into the menu constructor, so that the menu has something to 
             // perform its actions against....
-            Menu mainMenu = new Menu();
+            MainMenu mainMenu = new MainMenu();
             mainMenu.Show();
         }
     }
