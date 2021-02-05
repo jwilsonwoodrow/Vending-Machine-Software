@@ -15,11 +15,10 @@ namespace Capstone.CLI
             AddOption("Feed Money", FeedMoney);
             AddOption("Select Product", SelectProduct);
             AddOption("Finish Transaction", FinishTransaction);
-            AddOption("Back", Close);
         }
         protected override void OnBeforeShow()
         {
-            Console.WriteLine("Welcome to the Vending Machine");
+            Console.WriteLine("Welcome to the Vendo-Matic 8000");
             Console.WriteLine($"Your current balance is: ${machine.MachineBalance}");
             Console.WriteLine("");
         }
