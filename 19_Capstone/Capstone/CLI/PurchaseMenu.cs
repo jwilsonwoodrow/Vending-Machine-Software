@@ -15,20 +15,18 @@ namespace Capstone.CLI
             AddOption("Feed Money", FeedMoney);
             AddOption("Select Product", SelectProduct);
             AddOption("Finish Transaction", FinishTransaction);
-            this.Configure(config => {
-                
+            this.Configure(config => {      
                 config.ItemForegroundColor = ConsoleColor.Green;
-
-
+                config.SelectedItemForegroundColor = ConsoleColor.White;
             });
         }
         protected override void OnBeforeShow()
         {
-            Console.WriteLine("Welcome to the Vendo-Matic 8000");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Welcome to the Purchase Menu");
             Console.WriteLine($"Your current balance is: ${machine.MachineBalance}");
             Console.WriteLine("");
         }
-
 
         #region PurchaseMenu Functions
 

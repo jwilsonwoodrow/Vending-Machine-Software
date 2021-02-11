@@ -19,8 +19,6 @@ namespace Capstone
         static void Main(string[] args)
         {
             // You may want to create some objects to get the whole process started here...
-
-
             // Some objects could be passed into the menu constructor, so that the menu has something to 
             // perform its actions against....
             MainMenu mainMenu = new MainMenu();

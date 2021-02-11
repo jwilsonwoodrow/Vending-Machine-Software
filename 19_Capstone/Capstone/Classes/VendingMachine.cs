@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Threading;
 
 namespace Capstone.Classes
 {
@@ -26,6 +27,7 @@ namespace Capstone.Classes
             using (StreamWriter writer = new StreamWriter(logPath, true))
             {
                 writer.WriteLine($"{DateTime.Now} FEED MONEY: {OldBalance} {MachineBalance}");
+                Thread.Sleep(10);    //to prevent user from overloading writer by holding down enter when feeding bills
             }
         }
 
@@ -53,7 +55,7 @@ namespace Capstone.Classes
             {
                 if (item.Value.Quantity == 0)
                 {
-                    Console.WriteLine($"{item.Value.Code} | {item.Value.Name} SOLD OUT");
+                    Console.WriteLine($"{item.Value.Code} | {item.Value.Name} | SOLD OUT");
                 }
                 else Console.WriteLine($"{item.Value.Code} | {item.Value.Name} | ${item.Value.Cost} | {item.Value.Quantity} in stock");
             }

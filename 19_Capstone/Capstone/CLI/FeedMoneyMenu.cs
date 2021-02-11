@@ -17,6 +17,11 @@ namespace Capstone.CLI
             AddOption("$5.00", AddFive);
             AddOption("$10.00", AddTen);
             AddOption("Back", Close);
+            this.Configure(config => {
+                config.SelectedItemForegroundColor = ConsoleColor.White;
+                config.ItemForegroundColor = ConsoleColor.Green;
+
+            });
         }
         protected override void OnBeforeShow()
         {

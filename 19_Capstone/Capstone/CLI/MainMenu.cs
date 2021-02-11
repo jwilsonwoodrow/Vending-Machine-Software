@@ -16,7 +16,7 @@ namespace Capstone.CLI
             AddOption("Purchase", BeginPurchase);
             AddOption("Exit", Exit);
              this.Configure(config => {
-                  config.SelectedItemForegroundColor = ConsoleColor.Cyan;
+                  config.SelectedItemForegroundColor = ConsoleColor.White;
                   config.ItemForegroundColor = ConsoleColor.DarkCyan;
           
               });
